@@ -1,9 +1,9 @@
 package com.company;
 
 public class MenschSpieler extends Spieler{
-    public MenschSpieler(Integer farbe, Integer nummer)
+    public MenschSpieler(Integer farbe, Integer nummer, String name)
     {
-        super(farbe, nummer);
+        super(farbe, nummer, name);
     }
 
     @Override

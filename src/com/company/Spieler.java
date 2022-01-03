@@ -1,28 +1,38 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public abstract class Spieler {
-    private Figur figur1;
-    private Figur figur2;
-    private Figur figur3;
-    private Figur figur4;
+    ArrayList<Figur> figuren = new ArrayList<>();
     private String name;
     private Integer nummer;
     private Integer farbe; //position ist an farbe gekoppelt
     private Boolean spielerIstFertig;
 
-    public Spieler(Integer farbe, Integer nummer)
+    public Spieler(Integer farbe, Integer nummer, String name)
     {
-        figur1 = new Figur(10*nummer);
-        figur2 = new Figur(10*nummer);
-        figur3 = new Figur(10*nummer);
-        figur4 = new Figur(10*nummer);
+        for(int i = 0; i < 4; i++)
+        {
+            figuren.add(new Figur(10*farbe));
+        }
         this.farbe = farbe;
         this.nummer = nummer;
+        this.name = name;
     }
 
     public Integer wuerfeln()
     {
         return 0;
+    }
+
+    public Integer getFarbe()
+    {
+        return farbe;
+    }
+
+    public ArrayList<Figur> getFiguren()
+    {
+        return figuren;
     }
 
     public abstract Figur auswaehlen();
