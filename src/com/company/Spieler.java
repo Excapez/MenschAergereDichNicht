@@ -13,7 +13,7 @@ public abstract class Spieler {
     {
         for(int i = 0; i < 4; i++)
         {
-            figuren.add(new Figur(10+10*farbe + i));
+            figuren.add(new Figur(10*farbe, i, farbe));
         }
         this.farbe = farbe;
         this.nummer = nummer;
@@ -30,12 +30,17 @@ public abstract class Spieler {
         return farbe;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
     public ArrayList<Figur> getFiguren()
     {
         return figuren;
     }
 
-    public abstract Figur auswaehlen();
+    public abstract int[][] auswaehlen(int[] figurenZugMoeglich, int[][] figurenZuege);
 
     public void schmeißen(Figur figur)
     {

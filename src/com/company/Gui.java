@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Gui {
 	// Spielfeld hat 11x11 Zellen
 	// Jede Zelle ist 5x3 Zeichen:
@@ -74,13 +76,16 @@ public class Gui {
 	
 	int startfelder1[] = { 0, 1, 7, 8};
 	int startfelder2[] = { 5, 6,12,13};
-	int startfelder3[] = {58,59,65,66};
-	int startfelder4[] = {63,64,70,71};
+	//!! 3 und 4 getauscht, da im Kreis
+	int startfelder4[] = {58,59,65,66};
+	int startfelder3[] = {63,64,70,71};
+	int startfelderAll[][] = {startfelder1, startfelder2, startfelder3, startfelder4};
 	
 	int zielfelder1[] = {32,33,34,35};
 	int zielfelder2[] = {10,15,18,25};
 	int zielfelder3[] = {39,38,37,36};
 	int zielfelder4[] = {61,56,53,46};
+	int zielfelderAll[][] = {zielfelder1, zielfelder2, zielfelder3, zielfelder4};
 	
 	int lauffelder[] = {20, 21, 22, 23, 24, 17, 14,  9,  2,  3,  // Ecke Spieler 1
 						 4, 11, 16, 19, 26, 27, 28, 29, 30, 40,  // Ecke Spieler 2
@@ -118,6 +123,75 @@ public class Gui {
 		hor_flipper();
 		koordinatenFinder();
 	}
+
+	void setSpielfeldWithArrays(Figur[] spielfeld, ArrayList<Figur>[] startFiguren, Figur[][] zielFiguren)
+	{
+		for(int i = 0; i < 40; i++) // über Spielfeld iterieren
+		{
+			if(spielfeld[i] == null)
+			{
+				feldEintrag(lauffelder[i], ' ');
+			}
+			else
+			{
+				feldEintrag(lauffelder[i], spielfeld[i].getFarbe().toString().charAt(0));
+			}
+		}
+
+		int n = 0;
+		int m = 0;
+
+		for(ArrayList<Figur> arrList : startFiguren)
+		{
+			if(n >= startFiguren.length)
+				break;
+			for(Figur figur : arrList)
+			{
+				if(m >= arrList.size())
+					break;
+				if(figur == null)
+				{
+					feldEintrag(startfelderAll[n][m], ' ');
+				}
+				else
+				{
+					feldEintrag(startfelderAll[n][m], startFiguren[n].get(m).getFarbe().toString().charAt(0));
+				}
+				m++;
+			}
+			n++;
+		}
+
+		/*for(int j = 0; j < 4; j++) // über Startfelder iterieren
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				if(startFiguren[j].get(i) == null)
+				{
+					feldEintrag(startfelderAll[j][i], ' ');
+				}
+				else
+				{
+					feldEintrag(startfelderAll[j][i], startFiguren[j].get(i).getFarbe().toString().charAt(0));
+				}
+			}
+		}*/
+
+		for(int j = 0; j < 4; j++) // über Startfelder iterieren
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				if(zielFiguren[j][i] == null)
+				{
+					feldEintrag(zielfelderAll[j][i], ' ');
+				}
+				else
+				{
+					feldEintrag(zielfelderAll[j][i], zielFiguren[j][i].getFarbe().toString().charAt(0));
+				}
+			}
+		}
+	}
 	
 	void koordinatenFinder() // Findet die Koordinaten aller 72 Spielfelder. 40 Normale + 16 Start + 16 Ziel.
 	{
@@ -138,9 +212,10 @@ public class Gui {
 		}
 	}
 	
-	void feldEintrag(int feldnummer) // Findet die Koordinaten aller 72 Spielfelder. 40 Normale + 16 Start + 16 Ziel.
+	void feldEintrag(int feldnummer, char character) // Findet die Koordinaten aller 72 Spielfelder. 40 Normale + 16 Start + 16 Ziel.
 	{
-		zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = 'X';
+		//zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = 'X';
+		zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = character;
 	}
 	
 	void ver_flipper(){

@@ -42,6 +42,9 @@ public class MenschAergereDichNicht {
 
         // Spielerliste an Spielfeld übergeben
         spielfeld.initSpielfeld(spieler);
+        spielfeld.updateGui();
+        spielfeld.spielfeldDrucken();
+        spielen();
     }
 
     //Funktion zur Auswahl einer Farbe auf der Kommandozeile
@@ -94,8 +97,7 @@ public class MenschAergereDichNicht {
     public String nameEingeben(Integer spielerNummer)
     {
         System.out.println("Name für Spieler " + (spielerNummer+1) + " eingeben!");
-        String name = Tastatur.liesText();
-        return name;
+        return Tastatur.liesText();
     }
 
     //Funktion zur Eingabe der Spieleranzahl
@@ -129,6 +131,108 @@ public class MenschAergereDichNicht {
          *
          *
          */
+
+        for(int n = 0; n < 4; n++) {
+            int wurf = 6;//Wuerfel.wuerfeln();
+            System.out.println(wurf + " gewürfelt!");
+            int[] figurenZugMoeglich = new int[4];
+            System.out.println(figurenZugMoeglich[0]);
+            int[][] figurenZuege = {new int[4], new int[4], new int[4], new int[4]}; //speichert mögliche Züge [x][0] = aus Haus, [x][1] = normal ziehen, [x][2] = in Ziel ziehen, [x][3] = innerhalb Ziel ziehen
+            // Alle Möglichkeiten für alle Figuren überprüfen
+            for (Figur figur : spieler[n].getFiguren()) {
+                // Kontrolle ob Figur aus Haus raus
+                if (wurf == 6 && figur.getZustand() == Figur.START) {
+                    boolean figurAufStart = false;
+                    for (Figur figur2 : spieler[n].getFiguren()) {
+                        if (figur2.getZustand() == Figur.FELD && figur2.getPosition() == figur2.getStartposition()) {
+                            figurAufStart = true;
+                            break;
+                        }
+                    }
+                    if (!figurAufStart) {
+                        figurenZugMoeglich[figur.getNummer()] = 1;
+                        figurenZuege[figur.getNummer()][Figur.AUS_HAUS] = 1;
+                    }
+                }
+
+                // Kontrolle ob normaler Zug möglich
+                if (figur.getZustand() == Figur.FELD) {
+                    Integer zielFeld = (figur.getPosition() + wurf) % 40;
+                    boolean figurAufZielfeld = false;
+                    for (Figur figur2 : spieler[n].getFiguren()) {
+                        if (figur2.getPosition() == zielFeld) {
+                            figurAufZielfeld = true;
+                        }
+                    }
+                    if (!figurAufZielfeld) {
+                        figurenZugMoeglich[figur.getNummer()] = 1;
+                        figurenZuege[figur.getNummer()][Figur.NORMAL] = 1;
+                    }
+                }
+
+                // Kontrolle ob Zug in Ziel möglich
+                if (figur.getZustand() == Figur.FELD) {
+                    Integer zielFeld = (figur.getPosition() + wurf) % 40;
+                    boolean figurAufZielfeld = false;
+                    if (zielFeld >= figur.getStartposition() && zielFeld < (figur.getStartposition() + wurf)) {
+                        // Zug in Ziel möglich, Figuren in Ziel kontrollieren
+                        Integer posInZiel = figur.getPosition() + wurf - figur.getZielposition() - 1; // -1 da Zielfelder beginnend bei 0
+                        for (Figur figur2 : spieler[n].getFiguren()) {
+                            if (figur2.getZustand() == Figur.ZIEL && figur2.getPosition() == posInZiel) {
+                                figurAufZielfeld = true;
+                            }
+                        }
+                        if (!figurAufZielfeld) {
+                            figurenZugMoeglich[figur.getNummer()] = 1;
+                            figurenZuege[figur.getNummer()][Figur.IN_ZIEL] = 1;
+                        }
+                    }
+                }
+
+                // Kontrolle ob Zug innerhalb Ziel möglich
+                if (figur.getZustand() == Figur.ZIEL) {
+                    Integer zielFeld = figur.getPosition() + wurf;
+                    if (zielFeld < 3) {
+                        boolean figurAufZielfeld = false;
+                        for (Figur figur2 : spieler[n].getFiguren()) {
+                            if (figur2.getZustand() == Figur.ZIEL && figur2.getPosition() == zielFeld) {
+                                figurAufZielfeld = true;
+                            }
+                        }
+                        if (!figurAufZielfeld) {
+                            figurenZugMoeglich[figur.getNummer()] = 1;
+                            figurenZuege[figur.getNummer()][Figur.INNERHALB_ZIEL] = 1;
+                        }
+                    }
+                }
+            }
+
+            int[][] zugAuswahl = spieler[n].auswaehlen(figurenZugMoeglich, figurenZuege);
+            for (int i = 0; i < 4; i++) {
+                if (zugAuswahl[i][Figur.AUS_HAUS] == 1) {
+                    spieler[n].getFiguren().get(i).setZustand(Figur.FELD);
+                    spieler[n].getFiguren().get(i).setPosition(0);
+                } else if (zugAuswahl[i][Figur.NORMAL] == 1) {
+                    Integer zielPosition = (spieler[n].getFiguren().get(i).getPosition() + wurf) % 40;
+                    spieler[n].getFiguren().get(i).setPosition(zielPosition);
+                    if (spielfeld.spielfeld[zielPosition] != null) {
+                        spielfeld.spielfeld[zielPosition].setZustand(Figur.START);
+                        spielfeld.spielfeld[zielPosition].setPosition(0);
+                    }
+                } else if (zugAuswahl[i][Figur.IN_ZIEL] == 1) {
+                    Integer zielPosition = spieler[n].getFiguren().get(i).getPosition() + wurf - spieler[n].getFiguren().get(i).getZielposition() - 1;
+                    spieler[n].getFiguren().get(i).setZustand(Figur.ZIEL);
+                    spieler[n].getFiguren().get(i).setPosition(zielPosition);
+                } else if (zugAuswahl[i][Figur.INNERHALB_ZIEL] == 1) {
+                    Integer zielPosition = spieler[n].getFiguren().get(i).getPosition() + wurf;
+                    spieler[n].getFiguren().get(i).setPosition(zielPosition);
+                }
+            }
+        }
+        spielfeld.deleteSpielfeld();
+        spielfeld.updateCompleteSpielfeld(spieler);
+        spielfeld.updateGui();
+        spielfeld.spielfeldDrucken();
     }
 
     public void spielStoppen()

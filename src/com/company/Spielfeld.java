@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 
 public class Spielfeld {
-	
+	Gui gui = new Gui();
 	
 	Figur[] spielfeld = new Figur[40]; // Speichern der Figurposition
 	
@@ -71,5 +71,15 @@ public class Spielfeld {
 			{
 				zielFiguren[i][j] = null;
 			}
+	}
+
+	void spielfeldDrucken()
+	{
+		gui.spielfeld_drucken();
+	}
+
+	void updateGui()
+	{
+		gui.setSpielfeldWithArrays(spielfeld, startFiguren, zielFiguren);
 	}
 }

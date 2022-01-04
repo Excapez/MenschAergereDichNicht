@@ -9,10 +9,10 @@ public class Main {
 		MenschAergereDichNicht menschAergereDichNicht = new MenschAergereDichNicht();
 		menschAergereDichNicht.spielInit();
 		
-		com.company.Gui gui = new Gui();
+		//com.company.Gui gui = new Gui();
 		
-		gui.feldEintrag(gui.startfelder3[2]);
+		//gui.feldEintrag(gui.startfelder3[2]);
 		
-		gui.spielfeld_drucken();
+		//gui.spielfeld_drucken();
 	}
 }
