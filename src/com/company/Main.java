@@ -11,8 +11,8 @@ public class Main {
 		
 		com.company.Gui gui = new Gui();
 		
-		spielfeld1.feldEintrag(gui.startfelder3[2]);
+		gui.feldEintrag(gui.startfelder3[2]);
 		
-		spielfeld1.spielfeld_drucken();
+		gui.spielfeld_drucken();
 	}
 }
