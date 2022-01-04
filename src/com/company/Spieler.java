@@ -13,7 +13,7 @@ public abstract class Spieler {
     {
         for(int i = 0; i < 4; i++)
         {
-            figuren.add(new Figur(10*farbe));
+            figuren.add(new Figur(10+10*farbe + i));
         }
         this.farbe = farbe;
         this.nummer = nummer;
