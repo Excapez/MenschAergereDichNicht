@@ -74,13 +74,18 @@ public class Spielfeld {
 
 	Figur[] spielfeld = new Figur[40]; // Speichern der Figurposition
 
-	//ArrayList<Figur>[] startFiguren = new ArrayList[4]; // Array mit ArrayLists der Startfelder für Figuren (Dynamische ArrayList, da Position der Figur im Haus egal und Handhabung einfacher
+	ArrayList<Figur>[] startFiguren = (ArrayList<Figur>[]) new ArrayList[4]; // Array mit ArrayLists der Startfelder für Figuren (Dynamische ArrayList, da Position der Figur im Haus egal und Handhabung einfacher
 	
-	Figur[][] startFiguren = {new Figur[4], new Figur[4], new Figur[4], new Figur[4]}; //Array mit Arrays der Startfiguren
+	//Figur[][] startFiguren = {new Figur[4], new Figur[4], new Figur[4], new Figur[4]}; //Array mit Arrays der Startfiguren
 	
 	Figur[][] zielFiguren = {new Figur[4], new Figur[4], new Figur[4], new Figur[4]}; //Array mit Arrays der Zielfiguren
 
 	public Spielfeld(){
+		for(int i = 0; i < 4; i++)
+		{
+			startFiguren[i] = new ArrayList<>();
+		}
+
 		int i, j;
 		// Kästchen in der oberen linken Ecke zeichnen.
 		for(i=0; i<6; i++){
@@ -147,7 +152,8 @@ public class Spielfeld {
 		for(int i = 0; i < 4; i++)
 		{
 			for (Figur figur : spieler[i].getFiguren()) {
-				startFiguren[i][spieler[i].getFarbe()] = figur;
+				startFiguren[spieler[i].getFarbe()].add(figur);
+				//startFiguren[i][spieler[i].getFarbe()] = figur;
 			}
 		}
 	}
@@ -161,7 +167,8 @@ public class Spielfeld {
 				switch(figur.getZustand())
 				{
 					case Figur.START:
-						startFiguren[i][figur.getPosition()] = figur;
+						startFiguren[i].add(figur);
+						//startFiguren[i][figur.getPosition()] = figur;
 						break;
 
 					case Figur.FELD:
@@ -185,7 +192,8 @@ public class Spielfeld {
 
 		for(int i = 0; i < 4; i++)
 		{
-			startFiguren[i] = null;
+			startFiguren[i].clear();
+			//startFiguren[i] = null;
 		}
 
 		for(int i = 0; i < 4; i++)
