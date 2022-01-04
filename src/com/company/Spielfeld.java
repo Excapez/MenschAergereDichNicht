@@ -29,7 +29,7 @@ public class Spielfeld {
 	public static final String ANSI_RED_B = "\u001B[41m";
 	
 	
-	int[][] koordianten_speicher = new int[72][3]; // speichert die XY Koordianten aller 72 Spielfelder.
+	//int[][] koordianten_speicher = new int[72][2]; // speichert die XY Koordianten aller 72 Spielfelder.
 	/*
 	┌──┐ ┌──┐.......... ┌──┐ ┌──┐ ┌──┐ ..........┌──┐ ┌──┐
 	│00│ │01│.......... │02├─┤03│─┤04│ ..........│05│ │06│
@@ -66,6 +66,8 @@ public class Spielfeld {
 	└──┘ └──┘.......... └──┘ └──┘ └──┘ ..........└──┘ └──┘
 	*/
 	
+	int[][] koordinaten_speicher = new int[72][2];
+	
 	char[][] zeichen = new char[33][55]; // Hier werden die 33x55 Zeichen gespeichert.
 	
 	char[][] feld_zelle = { {' ','┌','─','─','┐'},
@@ -75,8 +77,6 @@ public class Spielfeld {
 	Figur[] spielfeld = new Figur[40]; // Speichern der Figurposition
 
 	ArrayList<Figur>[] startFiguren = (ArrayList<Figur>[]) new ArrayList[4]; // Array mit ArrayLists der Startfelder für Figuren (Dynamische ArrayList, da Position der Figur im Haus egal und Handhabung einfacher
-	
-	//Figur[][] startFiguren = {new Figur[4], new Figur[4], new Figur[4], new Figur[4]}; //Array mit Arrays der Startfiguren
 	
 	Figur[][] zielFiguren = {new Figur[4], new Figur[4], new Figur[4], new Figur[4]}; //Array mit Arrays der Zielfiguren
 
@@ -114,17 +114,12 @@ public class Spielfeld {
 		// Da das Spielbrett symmetrisch ist wird nun die obere linke ecke gespiegelt.
 		ver_flipper();
 		hor_flipper();
-		
 		koordinatenFinder();
-		
-		int startfelder1[] = {0,1,7,8};
-		
-		zeichen[ koordianten_speicher[startfelder1[3]] [1]  ][ koordianten_speicher[startfelder1[3]] [2]  ] = 'X';
 	}
+	
 	
 	void koordinatenFinder() // Findet die Koordinaten aller 72 Spielfelder. 40 Normale + 16 Start + 16 Ziel.
 	{
-		
 		int i, j;
 		
 		int counter = 0;
@@ -134,15 +129,17 @@ public class Spielfeld {
 				
 				if(zeichen[i][j] == '┌')
 				{
-					koordianten_speicher[counter][0] = counter;
-					koordianten_speicher[counter][1] = 1+i;
-					koordianten_speicher[counter][2] = 2+j;
+					koordinaten_speicher[counter][0] = 1+i;
+					koordinaten_speicher[counter][1] = 2+j;
 					counter++;
-					
 				}
 			}
 		}
-		
+	}
+	
+	void feldEintrag(int feldnummer) // Findet die Koordinaten aller 72 Spielfelder. 40 Normale + 16 Start + 16 Ziel.
+	{
+		zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = 'X';
 	}
 	
 	// Initialisieren des Spielfeldes (Startfiguren in passende ArrayLists packen)
@@ -153,11 +150,10 @@ public class Spielfeld {
 		{
 			for (Figur figur : spieler[i].getFiguren()) {
 				startFiguren[spieler[i].getFarbe()].add(figur);
-				//startFiguren[i][spieler[i].getFarbe()] = figur;
 			}
 		}
 	}
-
+	
 	// Spielfeld/Start/Ziel Arrays anhand aller Figuren aktualisieren
 	void updateCompleteSpielfeld(Spieler[] spieler)
 	{
@@ -168,20 +164,19 @@ public class Spielfeld {
 				{
 					case Figur.START:
 						startFiguren[i].add(figur);
-						//startFiguren[i][figur.getPosition()] = figur;
 						break;
-
+							
 					case Figur.FELD:
 						spielfeld[figur.getPosition()] = figur;
 						break;
-
+						
 					case Figur.ZIEL:
 						zielFiguren[i][figur.getPosition()] = figur;
 				}
 			}
 		}
 	}
-
+	
 	// Kompletten Spielfeldspeicher zurücksetzen
 	void deleteSpielfeld()
 	{
@@ -189,13 +184,12 @@ public class Spielfeld {
 		{
 			spielfeld[i] = null;
 		}
-
+		
 		for(int i = 0; i < 4; i++)
 		{
 			startFiguren[i].clear();
-			//startFiguren[i] = null;
 		}
-
+		
 		for(int i = 0; i < 4; i++)
 			for(int j = 0; j < 4; j++)
 			{
