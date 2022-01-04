@@ -143,12 +143,8 @@ public class Gui {
 
 		for(ArrayList<Figur> arrList : startFiguren)
 		{
-			if(n >= startFiguren.length)
-				break;
 			for(Figur figur : arrList)
 			{
-				if(m >= arrList.size())
-					break;
 				if(figur == null)
 				{
 					feldEintrag(startfelderAll[n][m], ' ');
@@ -159,6 +155,7 @@ public class Gui {
 				}
 				m++;
 			}
+			m = 0;
 			n++;
 		}
 
