@@ -123,11 +123,6 @@ public class MenschAergereDichNicht {
         System.out.println(spieleranzahl + " Spieler festgelegt");
     }
 
-    public void spielStarten()
-    {
-
-    }
-
     public void spielen()
     {
         /**
@@ -234,8 +229,10 @@ public class MenschAergereDichNicht {
 						}
 					}
 
+                    // Möglichkeiten an Spieler übergeben, Rückgabe ist Auswahl
 					int[][] zugAuswahl = spieler[n].auswaehlen(figurenZugMoeglich, figurenZuege);
 					boolean zugMoeglich = false;
+                    // Überprüfen welche Auswahl getroffen wurde und dementsprechend Figuren anpassen
 					for (int i = 0; i < 4; i++) {
 						if (zugAuswahl[i][Figur.AUS_HAUS] == 1) {
 							Integer startPosition = spieler[n].getFiguren().get(i).getStartposition();

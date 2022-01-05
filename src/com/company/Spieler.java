@@ -37,11 +37,6 @@ public abstract class Spieler {
         return "";
     }
 
-    public Integer wuerfeln()
-    {
-        return 0;
-    }
-
     public Integer getFarbe()
     {
         return farbe;
@@ -78,13 +73,7 @@ public abstract class Spieler {
     {
         return spielerIstFertig;
     }
-	
-	
+
     public abstract int[][] auswaehlen(int[] figurenZugMoeglich, int[][] figurenZuege);
-
-    public void schmeißen(Figur figur)
-    {
-
-    }
 
 }

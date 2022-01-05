@@ -38,11 +38,6 @@ public class Figur {
         zustand = zus;
     }
 
-    public void schmeißen()
-    {
-
-    }
-
     public Integer getPosition()
     {
         return position;
