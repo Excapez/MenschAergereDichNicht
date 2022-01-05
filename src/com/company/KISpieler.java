@@ -30,7 +30,7 @@ public class KISpieler extends Spieler{
 
         String out = this.getName() + " zieht ";
 
-        // Kontrolle ob Zug in Ziel moeglich
+        // Kontrolle ob Zug in Ziel moeglich, wenn ja diesen machen
         for(int i = 0; i < 4; i++)
         {
             if(figurenZuege[i][Figur.IN_ZIEL] == 1)
@@ -41,6 +41,7 @@ public class KISpieler extends Spieler{
             }
         }
 
+        // Kontrolle ob Zug aus Haus möglich, wenn ja diesen machen
         for(int i = 0; i < 4; i++)
         {
             if(figurenZuege[i][Figur.AUS_HAUS] == 1)
@@ -51,6 +52,18 @@ public class KISpieler extends Spieler{
             }
         }
 
+        // Kontrolle ob Zug von Startposition weg möglich, wenn ja diesen machen
+        for(int i = 0; i < 4; i++)
+        {
+            if(figurenZuege[i][Figur.NORMAL] == 1 && figuren.get(i).getPosition() == figuren.get(i).getStartposition())
+            {
+                System.out.println(out + "mit Figur " + i + " von Startposition");
+                zugAuswahl[i][Figur.NORMAL] = 1;
+                return zugAuswahl;
+            }
+        }
+
+        // Kontrolle ob Zug innerhalb Ziel möglich, wenn ja diesen machen
         for(int i = 0; i < 4; i++)
         {
             if(figurenZuege[i][Figur.INNERHALB_ZIEL] == 1)
@@ -61,6 +74,7 @@ public class KISpieler extends Spieler{
             }
         }
 
+        // Kontrolle ob normaler Zug möglich, wenn ja diesen machen
         for(int i = 0; i < 4; i++)
         {
             if(figurenZuege[i][Figur.NORMAL] == 1)

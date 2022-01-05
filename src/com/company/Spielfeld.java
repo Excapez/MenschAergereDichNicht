@@ -21,6 +21,7 @@ public class Spielfeld {
 	// Spielfeld/Start/Ziel Arrays anhand aller Figuren aktualisieren
 	void updateCompleteSpielfeld(Spieler[] spieler)
 	{
+		deleteSpielfeld();
 		for(int i = 0; i < 4; i++)
 		{
 			for (Figur figur : spieler[i].getFiguren()) {
@@ -75,7 +76,6 @@ public class Spielfeld {
 
 	void spielfeldDrucken(Spieler[] spieler)
 	{
-		deleteSpielfeld();
 		updateCompleteSpielfeld(spieler);
 		updateGui();
 		gui.spielfeld_drucken();

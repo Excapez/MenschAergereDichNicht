@@ -33,7 +33,7 @@ public class MenschAergereDichNicht {
         }
 
         //KI-Farben festlegen
-        for(int i = 3; i >= spieleranzahl; i--)
+        for(int i = 0; i < 4 - spieleranzahl; i++)
         {
             Integer farbe = verfuegbareFarben.get(0);
             spieler[farbe] = new KISpieler(farbe, i, "KI " + i);
@@ -239,6 +239,10 @@ public class MenschAergereDichNicht {
 					for (int i = 0; i < 4; i++) {
 						if (zugAuswahl[i][Figur.AUS_HAUS] == 1) {
 							Integer startPosition = spieler[n].getFiguren().get(i).getStartposition();
+                            if (spielfeld.spielfeld[startPosition] != null) {
+                                spielfeld.spielfeld[startPosition].setZustand(Figur.START);
+                                spielfeld.spielfeld[startPosition].setPosition(0);
+                            }
 							spieler[n].getFiguren().get(i).setZustand(Figur.FELD);
 							spieler[n].getFiguren().get(i).setPosition(startPosition);
 							zugMoeglich = true;
@@ -272,6 +276,7 @@ public class MenschAergereDichNicht {
 					fertigeSpieler++;
 				}
             }
+            spielfeld.updateCompleteSpielfeld(spieler);
         }
     }
 
@@ -280,3 +285,4 @@ public class MenschAergereDichNicht {
 		System.out.println("Spiel zuende!");
     }
 }
+
