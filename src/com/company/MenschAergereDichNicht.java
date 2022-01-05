@@ -89,6 +89,7 @@ public class MenschAergereDichNicht {
                 return Figur.GRUEN;
             default:
                 System.out.println("Ausgewählte Farbe existiert nicht, Farbe wird automatisch gewählt");
+                Tastatur.waitForEnter();
                 return verfuegbareFarben.get(0);
         }
     }
@@ -96,14 +97,29 @@ public class MenschAergereDichNicht {
     public String nameEingeben(Integer spielerNummer)
     {
         System.out.println("Name für Spieler " + (spielerNummer+1) + " eingeben!");
-        return Tastatur.liesText();
+        String name = Tastatur.liesText();
+        if(name.isEmpty())
+            name = " ";
+        while(name.charAt(0) == ' ')
+        {
+            System.out.println("Fehlerhafte Eingabe! Erneut eingeben:");
+            name = Tastatur.liesText();
+            if(name.isEmpty())
+                name = " ";
+        }
+        return name;
     }
 
     //Funktion zur Eingabe der Spieleranzahl
     public void spieleranzahlErmitteln()
     {
-        System.out.println("Bitte Spieleranzahl eingeben:");
+        System.out.println("Bitte Spieleranzahl eingeben (0-4):");
         spieleranzahl = Tastatur.liesZahl();
+        while(spieleranzahl < 0 || spieleranzahl > 4)
+        {
+            System.out.println("Fehlerhafte Eingabe! Erneut eingeben:");
+            spieleranzahl = Tastatur.liesZahl();
+        }
         System.out.println(spieleranzahl + " Spieler festgelegt");
     }
 

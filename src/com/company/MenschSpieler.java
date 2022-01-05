@@ -38,6 +38,14 @@ public class MenschSpieler extends Spieler{
         }
         figurAuswahl = Tastatur.liesZahl();
 
+        while(figurAuswahl == 0 && figurenZugMoeglich[0] == 0 || figurAuswahl == 1 && figurenZugMoeglich[1] == 0
+                || figurAuswahl == 2 && figurenZugMoeglich[2] == 0 || figurAuswahl == 3 && figurenZugMoeglich[3] == 0
+                || figurAuswahl < 0 || figurAuswahl > 3)
+        {
+            System.out.println("Fehlerhafte Eingabe! Erneut eingeben:");
+            figurAuswahl = Tastatur.liesZahl();
+        }
+
         if(figurenZuege[figurAuswahl][Figur.AUS_HAUS] == 1)
         {
             System.out.println(0 + ": Mit Figur aus dem Haus ziehen");
@@ -55,6 +63,15 @@ public class MenschSpieler extends Spieler{
             System.out.println(3 + ": Mit Figur innerhalb Ziel ziehen");
         }
         figurZugTyp = Tastatur.liesZahl();
+
+        while(figurZugTyp == 0 && figurenZuege[figurAuswahl][Figur.AUS_HAUS] == 0 || figurZugTyp == 1 && figurenZuege[figurAuswahl][Figur.NORMAL] == 0
+                || figurZugTyp == 2 && figurenZuege[figurAuswahl][Figur.IN_ZIEL] == 0 || figurZugTyp == 3 && figurenZuege[figurAuswahl][Figur.INNERHALB_ZIEL] == 0
+                || figurZugTyp < 0 || figurZugTyp > 3)
+        {
+            System.out.println("Fehlerhafte Eingabe! Erneut eingeben:");
+            figurZugTyp = Tastatur.liesZahl();
+        }
+
         zugAuswahl[figurAuswahl][figurZugTyp] = 1;
         return zugAuswahl;
     }

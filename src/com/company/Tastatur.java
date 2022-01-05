@@ -27,7 +27,7 @@ public class Tastatur
             return Integer.parseInt(liesText());
         } catch (Exception e)
         {
-            return 0;
+            return -1;
         }
     }
 
@@ -52,7 +52,7 @@ public class Tastatur
             return reader.readLine();
         } catch (Exception e)
         {
-            return null;
+            return " ";
         }
     }
 
