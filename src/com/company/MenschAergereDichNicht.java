@@ -133,10 +133,10 @@ public class MenschAergereDichNicht {
          */
         while(true) {
             for (int n = 0; n < 4; n++) {
+                System.out.println("Spieler " + spieler[n].getName() + " ist dran!");
                 int wurf = Wuerfel.wuerfeln();
                 System.out.println(wurf + " gewürfelt!");
                 int[] figurenZugMoeglich = new int[4];
-                System.out.println(figurenZugMoeglich[0]);
                 int[][] figurenZuege = {new int[4], new int[4], new int[4], new int[4]}; //speichert mögliche Züge [x][0] = aus Haus, [x][1] = normal ziehen, [x][2] = in Ziel ziehen, [x][3] = innerhalb Ziel ziehen
                 // Alle Möglichkeiten für alle Figuren überprüfen
                 for (Figur figur : spieler[n].getFiguren()) {
@@ -208,11 +208,13 @@ public class MenschAergereDichNicht {
                 }
 
                 int[][] zugAuswahl = spieler[n].auswaehlen(figurenZugMoeglich, figurenZuege);
+                boolean zugMoeglich = false;
                 for (int i = 0; i < 4; i++) {
                     if (zugAuswahl[i][Figur.AUS_HAUS] == 1) {
                         Integer startPosition = spieler[n].getFiguren().get(i).getStartposition();
                         spieler[n].getFiguren().get(i).setZustand(Figur.FELD);
                         spieler[n].getFiguren().get(i).setPosition(startPosition);
+                        zugMoeglich = true;
                     } else if (zugAuswahl[i][Figur.NORMAL] == 1) {
                         Integer zielPosition = (spieler[n].getFiguren().get(i).getPosition() + wurf) % 40;
                         spieler[n].getFiguren().get(i).setPosition(zielPosition);
@@ -220,14 +222,21 @@ public class MenschAergereDichNicht {
                             spielfeld.spielfeld[zielPosition].setZustand(Figur.START);
                             spielfeld.spielfeld[zielPosition].setPosition(0);
                         }
+                        zugMoeglich = true;
                     } else if (zugAuswahl[i][Figur.IN_ZIEL] == 1) {
                         Integer zielPosition = spieler[n].getFiguren().get(i).getPosition() + wurf - spieler[n].getFiguren().get(i).getZielposition() - 1;
                         spieler[n].getFiguren().get(i).setZustand(Figur.ZIEL);
                         spieler[n].getFiguren().get(i).setPosition(zielPosition);
+                        zugMoeglich = true;
                     } else if (zugAuswahl[i][Figur.INNERHALB_ZIEL] == 1) {
                         Integer zielPosition = spieler[n].getFiguren().get(i).getPosition() + wurf;
                         spieler[n].getFiguren().get(i).setPosition(zielPosition);
+                        zugMoeglich = true;
                     }
+                }
+                if(spieler[n].getClass() == KISpieler.class || !zugMoeglich)
+                {
+                    Tastatur.waitForEnter();
                 }
             }
             spielfeld.deleteSpielfeld();

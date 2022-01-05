@@ -56,4 +56,18 @@ public class Tastatur
         }
     }
 
+    // Wait for Enter key
+    public static void waitForEnter()
+    {
+        System.out.println("Press Enter to continue");
+        try
+        {
+            System.in.read();
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+
 }
