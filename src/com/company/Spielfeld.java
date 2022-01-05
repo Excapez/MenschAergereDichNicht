@@ -35,7 +35,7 @@ public class Spielfeld {
 						break;
 						
 					case Figur.ZIEL:
-						zielFiguren[i][figur.getPosition()] = figur;
+						zielFiguren[i][figur.getNummer()] = figur;
 				}
 			}
 		}

@@ -68,11 +68,11 @@ public class Gui {
 	
 	int[][] koordinaten_speicher = new int[72][2];
 	
-	char[][] zeichen = new char[33][55]; // Hier werden die 33x55 Zeichen gespeichert.
+	String[][] zeichen = new String[33][55]; // Hier werden die 33x55 Zeichen gespeichert.
 	
-	char[][] feld_zelle = { {' ','┌','─','─','┐'},
-							{' ','│',' ',' ','│'},
-							{' ','└','─','─','┘'}};
+	String[][] feld_zelle = {{" ","┌","─","─","┐"},
+							 {" ","│"," "," ","│"},
+							 {" ","└","─","─","┘"}};
 	
 	int startfelder1[] = { 0, 1, 7, 8};
 	int startfelder2[] = { 5, 6,12,13};
@@ -130,28 +130,30 @@ public class Gui {
 		{
 			if(spielfeld[i] == null)
 			{
-				feldEintrag(lauffelder[i], ' ');
+				feldEintrag(lauffelder[i], " ", 5);
 			}
 			else
 			{
-				feldEintrag(lauffelder[i], spielfeld[i].getFarbe().toString().charAt(0));
+				feldEintrag(lauffelder[i], spielfeld[i].getFarbe().toString(), spielfeld[i].getNummer());
 			}
 		}
 
 		int n = 0;
 		int m = 0;
-
+		
+		
+		
 		for(ArrayList<Figur> arrList : startFiguren)
 		{
 			for(Figur figur : arrList)
 			{
 				if(figur == null)
 				{
-					feldEintrag(startfelderAll[n][m], ' ');
+					feldEintrag(startfelderAll[n][m], " ", 5);
 				}
 				else
 				{
-					feldEintrag(startfelderAll[n][m], startFiguren[n].get(m).getFarbe().toString().charAt(0));
+					feldEintrag(startfelderAll[n][m], startFiguren[n].get(m).getFarbe().toString(), startFiguren[n].get(m).getNummer());
 				}
 				m++;
 			}
@@ -165,7 +167,7 @@ public class Gui {
 			{
 				if(startFiguren[j].get(i) == null)
 				{
-					feldEintrag(startfelderAll[j][i], ' ');
+					feldEintrag(startfelderAll[j][i], " ");
 				}
 				else
 				{
@@ -180,11 +182,11 @@ public class Gui {
 			{
 				if(zielFiguren[j][i] == null)
 				{
-					feldEintrag(zielfelderAll[j][i], ' ');
+					feldEintrag(zielfelderAll[j][i], " ", 5);
 				}
 				else
 				{
-					feldEintrag(zielfelderAll[j][i], zielFiguren[j][i].getFarbe().toString().charAt(0));
+					feldEintrag(zielfelderAll[j][i], zielFiguren[j][i].getFarbe().toString(), zielFiguren[j][i].getNummer());
 				}
 			}
 		}
@@ -199,7 +201,7 @@ public class Gui {
 		for(i=0; i<33; i++){
 			for(j=0; j<55; j++){
 				
-				if(zeichen[i][j] == '┌')
+				if(zeichen[i][j] == "┌")
 				{
 					koordinaten_speicher[counter][0] = 1+i;
 					koordinaten_speicher[counter][1] = 2+j;
@@ -209,10 +211,36 @@ public class Gui {
 		}
 	}
 	
-	void feldEintrag(int feldnummer, char character) // Findet die Koordinaten aller 72 Spielfelder. 40 Normale + 16 Start + 16 Ziel.
+	void feldEintrag(int feldnummer, String character, int nummer) // Findet die Koordinaten aller 72 Spielfelder. 40 Normale + 16 Start + 16 Ziel.
 	{
-		//zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = 'X';
-		zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = character;
+		//zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = "X";
+		
+		if(character == " ")
+		{
+			zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]-1] = character;
+			zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = character;
+		}
+		else
+		{
+			String FARBCODE;
+			switch (character) {
+				case "0":  FARBCODE = ANSI_BLU_C;
+						break;
+				case "1":  FARBCODE = ANSI_YEL_C;
+						break;
+				case "2":  FARBCODE = ANSI_GRN_C;
+						break;
+				case "3":  FARBCODE = ANSI_RED_C;
+						break;
+				default: FARBCODE = ANSI_RED_B;
+						break;
+			}
+		
+		zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]-1] = FARBCODE+nummer+ANSI_RESET;
+		zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = FARBCODE+FIGURE+ANSI_RESET;
+		
+		}
+		
 	}
 	
 	void ver_flipper(){
@@ -220,17 +248,17 @@ public class Gui {
 		for(y=0; y<=16; y++){
 			for(x=1; x<=26; x++){
 				switch (zeichen[y][x]) {
-					case '┌':  zeichen[y][55-x] = '┐';
+					case "┌":  zeichen[y][55-x] = "┐";
 							break;
-					case '└':  zeichen[y][55-x] = '┘';
+					case "└":  zeichen[y][55-x] = "┘";
 							break;
-					case '┐':  zeichen[y][55-x] = '┌';
+					case "┐":  zeichen[y][55-x] = "┌";
 							break;
-					case '┘':  zeichen[y][55-x] = '└';
+					case "┘":  zeichen[y][55-x] = "└";
 							break;
-					case '├':  zeichen[y][55-x] = '┤';
+					case "├":  zeichen[y][55-x] = "┤";
 							break;
-					case '┤':  zeichen[y][55-x] = '├';
+					case "┤":  zeichen[y][55-x] = "├";
 							break;
 					default: zeichen[y][55-x] = zeichen[y][x];
 							break;
@@ -244,17 +272,17 @@ public class Gui {
 		for(x=0; x<=54; x++){
 			for(y=0; y<=16; y++){
 				switch (zeichen[y][x]) {
-					case '┌':  zeichen[32-y][x] = '└';
+					case "┌":  zeichen[32-y][x] = "└";
 							break;
-					case '└':  zeichen[32-y][x] = '┌';
+					case "└":  zeichen[32-y][x] = "┌";
 							break;
-					case '┐':  zeichen[32-y][x] = '┘';
+					case "┐":  zeichen[32-y][x] = "┘";
 							break;
-					case '┘':  zeichen[32-y][x] = '┐';
+					case "┘":  zeichen[32-y][x] = "┐";
 							break;
-					case '┬':  zeichen[32-y][x] = '┴';
+					case "┬":  zeichen[32-y][x] = "┴";
 							break;
-					case '┴':  zeichen[32-y][x] = '┬';
+					case "┴":  zeichen[32-y][x] = "┬";
 							break;
 					default: zeichen[32-y][x] = zeichen[y][x];
 							break;
@@ -277,18 +305,18 @@ public class Gui {
 		int a,b;
 		for(a=0; a<3; a++){
 			for(b=0; b<5; b++){
-				zeichen[a+x*3][b+y*5] = ' ';
+				zeichen[a+x*3][b+y*5] = " ";
 			}
 		}
 	}
 	
 	void linie_zeichnen(int x, int y){
-		zeichen[1+y*3][4+x*5] = '├';
-		zeichen[1+y*3][5+x*5] = '─';
-		zeichen[1+y*3][6+x*5] = '┤';
+		zeichen[1+y*3][4+x*5] = "├";
+		zeichen[1+y*3][5+x*5] = "─";
+		zeichen[1+y*3][6+x*5] = "┤";
 		
-		zeichen[2+x*3][2+y*5] = '┬';
-		zeichen[3+x*3][2+y*5] = '┴';
+		zeichen[2+x*3][2+y*5] = "┬";
+		zeichen[3+x*3][2+y*5] = "┴";
 	}
 	
 	void spielfeld_drucken(){

@@ -28,6 +28,7 @@ public class Figur {
         this.nummer = nummer;
         this.farbe = farbe;
         zielposition = (startposition + 39) % 40;
+        System.out.println("ZIEL IST "+zielposition);
         position = 0;
         zustand = START;
     }
