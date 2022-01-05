@@ -138,23 +138,23 @@ public class Gui {
 			}
 		}
 
+		// Startfelder in Ausgabe löschen
+		for(int j = 0; j < 4; j++)
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				feldEintrag(startfelderAll[j][i], " ", 5);
+			}
+		}
+
+		// Startfiguren eintragen
 		int n = 0;
 		int m = 0;
-		
-		
-		
 		for(ArrayList<Figur> arrList : startFiguren)
 		{
 			for(Figur figur : arrList)
 			{
-				if(figur == null)
-				{
-					feldEintrag(startfelderAll[n][m], " ", 5);
-				}
-				else
-				{
-					feldEintrag(startfelderAll[n][m], startFiguren[n].get(m).getFarbe().toString(), startFiguren[n].get(m).getNummer());
-				}
+				feldEintrag(startfelderAll[n][m], startFiguren[n].get(m).getFarbe().toString(), startFiguren[n].get(m).getNummer());
 				m++;
 			}
 			m = 0;
