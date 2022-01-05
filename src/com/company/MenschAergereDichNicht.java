@@ -174,7 +174,7 @@ public class MenschAergereDichNicht {
                     }
 
                     // Kontrolle ob Zug in Ziel möglich
-                    if (figur.getZustand() == Figur.FELD) {
+                    if (figur.getZustand() == Figur.FELD && figur.getPosition() <= figur.getZielposition() && figur.getPosition() >= figur.getZielposition() - 5) {
                         Integer zielFeld = (figur.getPosition() + wurf) % 40;
                         boolean figurAufZielfeld = false;
                         if (zielFeld >= figur.getStartposition() && zielFeld < (figur.getStartposition() + 4)) {

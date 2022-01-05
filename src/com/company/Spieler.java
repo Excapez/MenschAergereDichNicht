@@ -25,13 +25,13 @@ public abstract class Spieler {
         switch(farbe)
         {
             case Figur.BLAU:
-                return "Blau";
+                return Gui.ANSI_BLU_C + "Blau" + Gui.ANSI_RESET;
             case Figur.GELB:
-                return "Gelb";
+                return Gui.ANSI_YEL_C + "Gelb" + Gui.ANSI_RESET;
             case Figur.GRUEN:
-                return "Gruen";
+                return Gui.ANSI_GRN_C + "Gruen" + Gui.ANSI_RESET;
             case Figur.ROT:
-                return "rot";
+                return Gui.ANSI_RED_C + "Rot" + Gui.ANSI_RESET;
         }
         return "";
     }
