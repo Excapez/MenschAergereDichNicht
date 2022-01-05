@@ -7,6 +7,7 @@ public class MenschAergereDichNicht {
     private Spieler[] spieler = new Spieler[4];
     private Integer spieleranzahl;
     private ArrayList<Integer> verfuegbareFarben = new ArrayList<>();
+    private ArrayList<String> podium = new ArrayList<>();
 
     public MenschAergereDichNicht()
     {
@@ -266,7 +267,12 @@ public class MenschAergereDichNicht {
 					{
 						Tastatur.waitForEnter();
 					}
-					spieler[n].fertigTest();
+					
+					if (spieler[n].fertigTest() == true)
+					{
+						podium.add(spieler[n].getName());
+						System.out.println(spieler[n].getName()+" ist fertig!");
+					}
 				}
 				else
 				{
@@ -280,6 +286,9 @@ public class MenschAergereDichNicht {
     public void spielStoppen()
     {
 		System.out.println("Spiel zuende!");
+		for (int i = 0; i < 4; i++) {
+			System.out.println(i+". "+podium.get(i));
+		}
     }
 }
 

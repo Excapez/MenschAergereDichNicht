@@ -52,7 +52,7 @@ public abstract class Spieler {
         return figuren;
     }
 	
-	public void fertigTest()
+	public boolean fertigTest()
 	{
 		int fertig_counter = 0;
 		for(int i = 0; i < 4; i++)
@@ -66,6 +66,7 @@ public abstract class Spieler {
         {
 			spielerIstFertig = true;
 		}
+		return spielerIstFertig;
 		
 	}
 	
