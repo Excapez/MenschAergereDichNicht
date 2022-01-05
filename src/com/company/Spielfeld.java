@@ -6,7 +6,7 @@ public class Spielfeld {
 	Gui gui = new Gui();
 	
 	Figur[] spielfeld = new Figur[40]; // Speichern der Figurposition
-	
+
 	ArrayList<Figur>[] startFiguren = (ArrayList<Figur>[]) new ArrayList[4]; // Array mit ArrayLists der Startfelder für Figuren (Dynamische ArrayList, da Position der Figur im Haus egal und Handhabung einfacher
 	
 	Figur[][] zielFiguren = {new Figur[4], new Figur[4], new Figur[4], new Figur[4]}; //Array mit Arrays der Zielfiguren
@@ -73,8 +73,11 @@ public class Spielfeld {
 			}
 	}
 
-	void spielfeldDrucken()
+	void spielfeldDrucken(Spieler[] spieler)
 	{
+		deleteSpielfeld();
+		updateCompleteSpielfeld(spieler);
+		updateGui();
 		gui.spielfeld_drucken();
 	}
 

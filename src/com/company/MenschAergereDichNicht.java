@@ -42,8 +42,7 @@ public class MenschAergereDichNicht {
 
         // Spielerliste an Spielfeld übergeben
         spielfeld.initSpielfeld(spieler);
-        spielfeld.updateGui();
-        spielfeld.spielfeldDrucken();
+        //spielfeld.spielfeldDrucken(spieler);
         spielen();
     }
 
@@ -133,7 +132,11 @@ public class MenschAergereDichNicht {
          */
         while(true) {
             for (int n = 0; n < 4; n++) {
-                System.out.println("Spieler " + spieler[n].getName() + " ist dran!");
+                if(spieler[n].getClass() == MenschSpieler.class)
+                {
+                    spielfeld.spielfeldDrucken(spieler);
+                }
+                System.out.println("Spieler " + spieler[n].getName() + " mit Farbe " + " ist dran!");
                 int wurf = Wuerfel.wuerfeln();
                 System.out.println(wurf + " gewürfelt!");
                 int[] figurenZugMoeglich = new int[4];
@@ -174,7 +177,7 @@ public class MenschAergereDichNicht {
                     if (figur.getZustand() == Figur.FELD) {
                         Integer zielFeld = (figur.getPosition() + wurf) % 40;
                         boolean figurAufZielfeld = false;
-                        if (zielFeld >= figur.getStartposition() && zielFeld < (figur.getStartposition() + wurf)) {
+                        if (zielFeld >= figur.getStartposition() && zielFeld < (figur.getStartposition() + 4)) {
                             // Zug in Ziel möglich, Figuren in Ziel kontrollieren
                             Integer posInZiel = figur.getPosition() + wurf - figur.getZielposition() - 1; // -1 da Zielfelder beginnend bei 0
                             for (Figur figur2 : spieler[n].getFiguren()) {
@@ -239,10 +242,6 @@ public class MenschAergereDichNicht {
                     Tastatur.waitForEnter();
                 }
             }
-            spielfeld.deleteSpielfeld();
-            spielfeld.updateCompleteSpielfeld(spieler);
-            spielfeld.updateGui();
-            spielfeld.spielfeldDrucken();
         }
     }
 

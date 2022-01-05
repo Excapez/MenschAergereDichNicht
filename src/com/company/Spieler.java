@@ -20,6 +20,22 @@ public abstract class Spieler {
         this.name = name;
     }
 
+    public String getFarbString()
+    {
+        switch(farbe)
+        {
+            case Figur.BLAU:
+                return "Blau";
+            case Figur.GELB:
+                return "Gelb";
+            case Figur.GRUEN:
+                return "Gruen";
+            case Figur.ROT:
+                return "rot";
+        }
+        return "";
+    }
+
     public Integer wuerfeln()
     {
         return 0;
