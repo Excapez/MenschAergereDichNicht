@@ -14,5 +14,7 @@ public class Main {
 		//gui.feldEintrag(gui.startfelder3[2]);
 		
 		//gui.spielfeld_drucken();
+		
+		menschAergereDichNicht.spielStoppen();
 	}
 }

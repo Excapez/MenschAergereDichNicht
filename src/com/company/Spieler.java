@@ -18,6 +18,7 @@ public abstract class Spieler {
         this.farbe = farbe;
         this.nummer = nummer;
         this.name = name;
+        spielerIstFertig = false;
     }
 
     public String getFarbString()
@@ -55,7 +56,30 @@ public abstract class Spieler {
     {
         return figuren;
     }
-
+	
+	public void fertigTest()
+	{
+		int fertig_counter = 0;
+		for(int i = 0; i < 4; i++)
+        {
+            if(figuren.get(i).getZustand() == Figur.IN_ZIEL)
+            {
+				fertig_counter++;
+            }
+        }
+        if(fertig_counter == 4)
+        {
+			spielerIstFertig = true;
+		}
+		
+	}
+	
+	public Boolean getIstFertig()
+    {
+        return spielerIstFertig;
+    }
+	
+	
     public abstract int[][] auswaehlen(int[] figurenZugMoeglich, int[][] figurenZuege);
 
     public void schmeißen(Figur figur)
