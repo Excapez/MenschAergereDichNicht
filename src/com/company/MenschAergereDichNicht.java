@@ -136,7 +136,7 @@ public class MenschAergereDichNicht {
                 {
                     spielfeld.spielfeldDrucken(spieler);
                 }
-                System.out.println("Spieler " + spieler[n].getName() + " mit Farbe " + " ist dran!");
+                System.out.println("Spieler " + spieler[n].getName() + " mit Farbe " + spieler[n].getFarbString() + " ist dran!");
                 int wurf = Wuerfel.wuerfeln();
                 System.out.println(wurf + " gewürfelt!");
                 int[] figurenZugMoeglich = new int[4];
