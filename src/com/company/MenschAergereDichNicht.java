@@ -215,7 +215,7 @@ public class MenschAergereDichNicht {
 						// Kontrolle ob Zug innerhalb Ziel möglich
 						if (figur.getZustand() == Figur.ZIEL) {
 							Integer zielFeld = figur.getPosition() + wurf;
-							if (zielFeld < 3) {
+							if (zielFeld < 4) {
 								boolean figurAufZielfeld = false;
 								for (Figur figur2 : spieler[n].getFiguren()) {
 									if (figur2.getZustand() == Figur.ZIEL && figur2.getPosition() == zielFeld) {
