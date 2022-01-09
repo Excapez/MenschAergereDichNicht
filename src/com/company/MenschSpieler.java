@@ -50,10 +50,6 @@ public class MenschSpieler extends Spieler{
 		{
 			figurZugTyp = 0;
 		}
-		else if(figurenZuege[figurAuswahl][Figur.NORMAL] == 1)
-		{
-			figurZugTyp = 1;
-		}
 		else if(figurenZuege[figurAuswahl][Figur.IN_ZIEL] == 1)
 		{
 			figurZugTyp = 2;
@@ -61,6 +57,10 @@ public class MenschSpieler extends Spieler{
 		else if(figurenZuege[figurAuswahl][Figur.INNERHALB_ZIEL] == 1)
 		{
 			figurZugTyp = 3;
+		}
+		else if(figurenZuege[figurAuswahl][Figur.NORMAL] == 1)
+		{
+			figurZugTyp = 1;
 		}
 
 		while(figurZugTyp == 0 && figurenZuege[figurAuswahl][Figur.AUS_HAUS] == 0 || figurZugTyp == 1 && figurenZuege[figurAuswahl][Figur.NORMAL] == 0
