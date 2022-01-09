@@ -263,10 +263,6 @@ public class MenschAergereDichNicht {
 							zugMoeglich = true;
 						}
 					}
-					if(spieler[n].getClass() == KISpieler.class || !zugMoeglich)
-					{
-						Tastatur.waitForEnter();
-					}
 					
 					if (spieler[n].fertigTest() == true)
 					{
