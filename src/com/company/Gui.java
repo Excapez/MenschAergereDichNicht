@@ -10,9 +10,6 @@ public class Gui {
 	//2 │ab│
 	//3 └──┘
 	// Spielfeld ist also 33 Spalten und 55 Zeilen.
-		
-	
-	//Λ↑↓→←⌂▲Λs♥♦♣♠¡
 	
 	public static final String FIGURE = "▲";
 	
@@ -28,8 +25,6 @@ public class Gui {
 	public static final String ANSI_GRN_B = "\u001B[42m";
 	public static final String ANSI_RED_B = "\u001B[41m";
 	
-	
-	//int[][] koordianten_speicher = new int[72][2]; // speichert die XY Koordianten aller 72 Spielfelder.
 	/*
 	┌──┐ ┌──┐.......... ┌──┐ ┌──┐ ┌──┐ ..........┌──┐ ┌──┐
 	│00│ │01│.......... │02├─┤03│─┤04│ ..........│05│ │06│
@@ -122,6 +117,22 @@ public class Gui {
 		ver_flipper();
 		hor_flipper();
 		koordinatenFinder();
+
+		for(i=0; i<4; i++){
+			feld_zelle_einfaerben(koordinaten_speicher[zielfelder1[i]][0]-1, koordinaten_speicher[zielfelder1[i]][1]-2, ANSI_BLU_C);
+			feld_zelle_einfaerben(koordinaten_speicher[zielfelder2[i]][0]-1, koordinaten_speicher[zielfelder2[i]][1]-2, ANSI_YEL_C);
+			feld_zelle_einfaerben(koordinaten_speicher[zielfelder3[i]][0]-1, koordinaten_speicher[zielfelder3[i]][1]-2, ANSI_GRN_C);
+			feld_zelle_einfaerben(koordinaten_speicher[zielfelder4[i]][0]-1, koordinaten_speicher[zielfelder4[i]][1]-2, ANSI_RED_C);
+		}
+		feld_zelle_einfaerben(koordinaten_speicher[20][0]-1, koordinaten_speicher[20][1]-2, ANSI_BLU_C);
+		feld_zelle_einfaerben(koordinaten_speicher[04][0]-1, koordinaten_speicher[04][1]-2, ANSI_YEL_C);
+		feld_zelle_einfaerben(koordinaten_speicher[51][0]-1, koordinaten_speicher[51][1]-2, ANSI_GRN_C);
+		feld_zelle_einfaerben(koordinaten_speicher[67][0]-1, koordinaten_speicher[67][1]-2, ANSI_RED_C);
+
+		zeichen[koordinaten_speicher[20][0]-2][koordinaten_speicher[20][1]] = "→";
+		zeichen[koordinaten_speicher[04][0]][koordinaten_speicher[04][1]+2] = "↓";
+		zeichen[koordinaten_speicher[51][0]+2][koordinaten_speicher[51][1]-1] = "←";
+		zeichen[koordinaten_speicher[67][0]][koordinaten_speicher[67][1]-3] = "↑";
 	}
 
 	void setSpielfeldWithArrays(Figur[] spielfeld, ArrayList<Figur>[] startFiguren, Figur[][] zielFiguren)
@@ -161,21 +172,6 @@ public class Gui {
 			n++;
 		}
 
-		/*for(int j = 0; j < 4; j++) // über Startfelder iterieren
-		{
-			for(int i = 0; i < 4; i++)
-			{
-				if(startFiguren[j].get(i) == null)
-				{
-					feldEintrag(startfelderAll[j][i], " ");
-				}
-				else
-				{
-					feldEintrag(startfelderAll[j][i], startFiguren[j].get(i).getFarbe().toString().charAt(0));
-				}
-			}
-		}*/
-
 		for(int j = 0; j < 4; j++) // über Startfelder iterieren
 		{
 			for(int i = 0; i < 4; i++)
@@ -213,8 +209,6 @@ public class Gui {
 	
 	void feldEintrag(int feldnummer, String character, int nummer) // Findet die Koordinaten aller 72 Spielfelder. 40 Normale + 16 Start + 16 Ziel.
 	{
-		//zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = "X";
-		
 		if(character == " ")
 		{
 			zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]-1] = character;
@@ -235,10 +229,8 @@ public class Gui {
 				default: FARBCODE = ANSI_RED_B;
 						break;
 			}
-		
 		zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]-1] = FARBCODE+nummer+ANSI_RESET;
 		zeichen[koordinaten_speicher[feldnummer][0]] [koordinaten_speicher[feldnummer][1]] = FARBCODE+FIGURE+ANSI_RESET;
-		
 		}
 		
 	}
@@ -292,6 +284,15 @@ public class Gui {
 		
 	}
 	
+	void feld_zelle_einfaerben(int x, int y, String farbe){
+		int a,b;
+		for(a=0; a<3; a++){
+			for(b=0; b<4; b++){
+				zeichen[a+x][b+y] = farbe+zeichen[a+x][b+y]+ANSI_RESET;
+			}
+		}
+	}
+
 	void feld_zelle_zeichnen(int x, int y){
 		int a,b;
 		for(a=0; a<3; a++){
